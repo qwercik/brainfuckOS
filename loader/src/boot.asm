@@ -19,8 +19,8 @@ start:
 	mov ss, ax
 	mov sp, 0x1000
 	
-	call clear_screen
-	
+	call rm_clear_screen
+
 	; Reading next sectors into memory
 	mov ah, 2
 	mov al, 1 ; Sectors amount
@@ -30,12 +30,12 @@ start:
 	xor bx, bx ; Sectors will be loaded into ES:BX -> 0x07E0:0x0000
 	int 0x13	
 	jc disk_error
-
-	jmp 0x07E0:0x0000
+	
+	jmp 0x0000:0x7E00 
 
 disk_error:
 	mov si, disk_error_msg
-	call print_string
+	call rm_print_string
 	cli
 	hlt
 

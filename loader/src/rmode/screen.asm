@@ -1,25 +1,22 @@
 %ifndef SCREEN_ASM
 %define SCREEN_ASM
+; Screen library for x86 real mode
 
-clear_screen:
+rm_clear_screen:
 	mov ax, 3
 	int 0x10
 	ret
 
-print_char:
-	; AL = character to print
+rm_print_string:
+	; DS:SI = string to print (terminated with \0)
 	mov ah, 0xE
 	xor bx, bx
-	int 0x10
-	ret
 
-print_string:
-	; DS:SI = string to print (terminated with \0)
 	lodsb
 	or al, al
 	jz .end
-	call print_char
-	jmp print_string
+	int 0x10
+	jmp rm_print_string
 	.end:
 		ret
 
