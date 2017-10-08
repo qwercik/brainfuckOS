@@ -14,6 +14,7 @@ print_char:
 	ret
 
 print_string:
+	; DS:SI = string to print (terminated with \0)
 	lodsb
 	or al, al
 	jz .end

@@ -1,6 +1,8 @@
 [BITS 16]
 [ORG 0x7C00]
 
+;;;; STAGE 1 ;;;;
+
 ; Reload CS
 jmp word 0x0000:start
 
@@ -8,7 +10,7 @@ start:
 	; Set up data segment registers
 	xor ax, ax
 	mov ds, ax
-	mov ax, 0x0150 
+	mov ax, 0x07E0
 	mov es, ax ; We want to read next sectors into 0x0150:0x0000
 
 	; Set up stack (0x500 - 0x1500)
@@ -25,12 +27,11 @@ start:
 	xor ch, ch
 	mov cl, 2
 	xor dh, dh
-	xor bx, bx ; Sectors will be loaded into ES:BX -> 0x0150:0x0000
+	xor bx, bx ; Sectors will be loaded into ES:BX -> 0x07E0:0x0000
 	int 0x13	
 	jc disk_error
 
-	cli
-	hlt
+	jmp 0x07E0:0x0000
 
 disk_error:
 	mov si, disk_error_msg
@@ -41,6 +42,10 @@ disk_error:
 %include "rmode/screen.asm"
 
 disk_error_msg db "Disk error!", 0
+
+%if ($ - $$) > 510
+	%error "Too much code!"
+%endif
 
 times 510 - ($ - $$) db 0
 dw 0xAA55
