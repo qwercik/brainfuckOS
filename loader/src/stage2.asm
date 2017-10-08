@@ -17,11 +17,15 @@ start:
 	hlt
 
 a20_unlocked:
+	; Load GDT
+	lgdt [gdt_info]
+
 	cli
 	hlt
 
 %include "rmode/screen.asm"
-%include "rmode/a20.asm"
+%include "a20.asm"
+%include "gdt.asm"
 
 a20_error_msg db "A20 unlocking error!", 0
 
