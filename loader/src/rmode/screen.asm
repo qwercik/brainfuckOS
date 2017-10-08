@@ -14,6 +14,12 @@ print_char:
 	ret
 
 print_string:
-	;
+	lodsb
+	or al, al
+	jz .end
+	call print_char
+	jmp print_string
+	.end:
+		ret
 
 %endif

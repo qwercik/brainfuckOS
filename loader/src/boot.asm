@@ -33,15 +33,14 @@ start:
 	hlt
 
 disk_error:
-	mov al, 'x'
-	call print_char
-	mov al, 'D'
-	call print_char
-
+	mov si, disk_error_msg
+	call print_string
 	cli
 	hlt
 
 %include "rmode/screen.asm"
+
+disk_error_msg db "Disk error!", 0
 
 times 510 - ($ - $$) db 0
 dw 0xAA55
