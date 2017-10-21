@@ -47,7 +47,19 @@ start32:
 	mov ss, ax
 	mov fs, ax
 	mov gs, ax
+	
+	mov esp, 0x6C00
 
+	mov esi, kernel_start 
+	call load_kernel_elf
+
+	; Run kernel :)
+	call eax
+ 
+	cli
 	hlt
 
+%include "elf.asm"
+
 times 512 - (($ - $$) % 512) db 0
+kernel_start: 

@@ -1,17 +1,24 @@
 ASM = nasm
 ASMFLAGS = -i src/
+CXX = i686-elf-g++
+CXXFLAGS =  
 
-all: loader.bin
-BINARIES = bin/boot.bin bin/stage2.bin 
+BINARIES = bin/boot.bin bin/stage2.bin bin/kernel
 
-loader.bin: $(BINARIES) 
+all: floppy.img
+
+floppy.img: $(BINARIES)
 	cat $^ > $@
 
 bin/%.bin: src/%.asm
 	$(ASM) -o $@ $< $(ASMFLAGS)
 
+bin/kernel: src/kernel.c
+	$(CXX) -o $@ $^ -nostdlib
+
 clean:
-	rm loader.bin
+	rm bin/*
+	rm floppy.img
 
 run:
-	qemu-system-i386 -fda loader.bin
+	qemu-system-i386 -fda floppy.img -m 512M

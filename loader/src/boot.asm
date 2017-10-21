@@ -23,7 +23,7 @@ start:
 
 	; Reading next sectors into memory
 	mov ah, 2
-	mov al, 1 ; Sectors amount
+	mov al, 3 ; Sectors amount
 	xor ch, ch
 	mov cl, 2
 	xor dh, dh
