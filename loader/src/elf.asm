@@ -6,8 +6,6 @@ load_kernel_elf:
 	; ESI - kernel ELF address
 	; Return (EAX) - entry point address
 
-	push esi
-
 	; EDI = Address of current program header entry
 	mov edi, dword [esi + 0x1C]
 	add edi, esi
@@ -33,19 +31,18 @@ load_kernel_elf:
 		mov edi, dword [edi + 0x8] ; ??? 
 		
 		call zeromem
-		
 
+		
 		; Restore old EDI value
 		pop edi
 		push edi
 
-
+		
 		; ECX = bytes to copy
 		mov ecx, dword [edi + 0x10]
 		
 		; ESI = segment offset in file
-		mov esi, dword [edi + 0x4]
-		add esi, 0x8000 
+		add esi, dword [edi + 0x4]
 		
 		; EDI = memory address of segment
 		mov edi, dword [edi + 0x8]
@@ -62,7 +59,6 @@ load_kernel_elf:
 
 	loop .program_header_loop
 
-	pop esi
 	mov eax, dword [esi + 0x18]
 	ret
 

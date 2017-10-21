@@ -23,7 +23,8 @@ a20_unlocked:
 	
 	; Load GDT
 	lgdt [gdt_info]
-	
+
+	; Set protected mode flag in cr0 register
 	mov eax, cr0
 	or eax, 1
 	mov cr0, eax
@@ -53,7 +54,8 @@ start32:
 	
 	; Set up stack
 	mov esp, 0x6C00
-
+	
+	; Load kernel into memory and put entry point to eax
 	mov esi, kernel_start 
 	call load_kernel_elf
 
@@ -63,7 +65,9 @@ start32:
 	cli 
 	hlt
 
+
 %include "elf.asm"
+
 
 ; Align to full 512B
 times 512 - (($ - $$) % 512) db 0
