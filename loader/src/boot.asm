@@ -25,7 +25,10 @@ start:
 
 	; Reading next sectors into memory
 	mov ah, 2
-	mov al, 3 ; Sectors amount
+	
+	; The flag below will be replaced with mov al, <sectors_to_read> and two nop instructions
+	dd 0x00C0FFEE
+	
 	xor ch, ch
 	mov cl, 2
 	xor dh, dh

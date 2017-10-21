@@ -28,7 +28,7 @@ load_kernel_elf:
 		mov ecx, dword [edi + 0x14]
 		
 		; EDI = address of segment in memory
-		mov edi, dword [edi + 0x8] ; ??? 
+		mov edi, dword [edi + 0x8] 
 		
 		call zeromem
 

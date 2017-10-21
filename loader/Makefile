@@ -5,10 +5,11 @@ CXXFLAGS =
 
 BINARIES = bin/boot.bin bin/stage2.bin bin/kernel
 
-all: floppy.img
+all: loader.img
 
-floppy.img: $(BINARIES)
+loader.img: $(BINARIES)
 	cat $^ > $@
+	./utils/fix-sectors-amount.py loader.img
 
 bin/%.bin: src/%.asm
 	$(ASM) -o $@ $< $(ASMFLAGS)
@@ -18,7 +19,7 @@ bin/kernel: src/kernel.c
 
 clean:
 	rm bin/*
-	rm floppy.img
+	rm loader.img
 
 run:
-	qemu-system-i386 -fda floppy.img -m 512M
+	qemu-system-i386 -fda loader.img -m 512M
