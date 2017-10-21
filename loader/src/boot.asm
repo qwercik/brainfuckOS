@@ -1,17 +1,17 @@
 [BITS 16]
 [ORG 0x7C00]
 
-;;;; STAGE 1 ;;;;
-
 ; Reload CS
 jmp word 0x0000:start
 
 start:
-	; Set up data segment registers
+	; Set up segment registers
 	xor ax, ax
 	mov ds, ax
+	
+	; We want to read next sectors into 0x07E0:0x0000 (ES:BX)
 	mov ax, 0x07E0
-	mov es, ax ; We want to read next sectors into 0x0150:0x0000
+	mov es, ax 
 
 	; Set up stack (0x500 - 0x1500)
 	; Stack size: 4 KiB
@@ -19,7 +19,9 @@ start:
 	mov ss, ax
 	mov sp, 0x1000
 	
-	call rm_clear_screen
+
+	call rmode_clear_screen
+
 
 	; Reading next sectors into memory
 	mov ah, 2
@@ -27,26 +29,32 @@ start:
 	xor ch, ch
 	mov cl, 2
 	xor dh, dh
-	xor bx, bx ; Sectors will be loaded into ES:BX -> 0x07E0:0x0000
+	xor bx, bx
 	int 0x13	
 	jc disk_error
 	
+
+	; Jump to stage 2
 	jmp 0x0000:0x7E00 
+
 
 disk_error:
 	mov si, disk_error_msg
-	call rm_print_string
+	call rmode_print_string
 	cli
 	hlt
 
-%include "rmode/screen.asm"
+disk_error_msg db "Disk reading error!", 0
 
-disk_error_msg db "Disk error!", 0
+
+%include "rmode_screen.asm"
+
 
 %if ($ - $$) > 510
-	%error "Too much code!"
+	%error "Too much code in bootsector! You have to fit in in 512 bytes excluding boot signature."
 %endif
 
+; Fill the rest of bootsector with zeros and add boot signature 0xAA55
 times 510 - ($ - $$) db 0
 dw 0xAA55
 
