@@ -10,6 +10,7 @@ all: loader.img
 loader.img: $(BINARIES)
 	cat $^ > $@
 	./utils/fix-sectors-amount.py loader.img
+	./utils/align-to-full-sector.py loader.img
 
 bin/%.bin: src/%.asm
 	$(ASM) -o $@ $< $(ASMFLAGS)

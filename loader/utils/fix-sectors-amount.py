@@ -24,9 +24,10 @@ with open(image_file, 'rb') as f:
     
     if flag in content:
         content = content.replace(flag, opcode)
-        print('Successfully fixed sectors to read amount')
     else:
         raise SystemExit('Incorrect image file. Does it include', str(flag), 'flag?')
 
 with open(image_file, 'wb') as f:
     f.write(content)
+    print('Successfully fixed sectors to read amount')
+
