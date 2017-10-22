@@ -2,3 +2,4 @@
 *.swa
 *.bin
 *.img
+bochs.conf

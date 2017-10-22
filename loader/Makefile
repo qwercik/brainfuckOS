@@ -1,26 +1,25 @@
 ASM = nasm
-ASMFLAGS = -i src/
-CXX = i686-elf-g++
-CXXFLAGS =  
+ASMFLAGS = -i ./
 
-BINARIES = bin/boot.bin bin/stage2.bin bin/kernel
+BUILD_DIR = bin
+BINARIES = $(BUILD_DIR)/boot.bin $(BUILD_DIR)/stage2.bin
+DEPENDENCIES = a20.asm boot.asm elf.asm gdt.asm memory.asm rmode_screen.asm stage2.asm  
+LOADER_FILE = loader.bin
 
-all: loader.img
 
-loader.img: $(BINARIES)
+.PHONY: all
+all: $(BUILD_DIR) $(LOADER_FILE)
+
+$(BUILD_DIR):
+	mkdir $@
+
+$(LOADER_FILE): $(BINARIES)
 	cat $^ > $@
-	./utils/fix-sectors-amount.py loader.img
-	./utils/align-to-full-sector.py loader.img
 
-bin/%.bin: src/%.asm
+$(BUILD_DIR)/%.bin: %.asm $(DEPENDENCIES)
 	$(ASM) -o $@ $< $(ASMFLAGS)
 
-bin/kernel: src/kernel.c
-	$(CXX) -o $@ $^ -nostdlib
-
+.PHONY: clean
 clean:
-	rm bin/*
-	rm loader.img
-
-run:
-	qemu-system-i386 -fda loader.img -m 512M
+	rm -r $(BUILD_DIR)
+	rm $(LOADER_FILE)
