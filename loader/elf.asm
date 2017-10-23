@@ -6,6 +6,8 @@ load_kernel_elf:
 	; ESI - kernel ELF address
 	; Return (EAX) - entry point address
 
+	push esi
+
 	; EDI = Address of current program header entry
 	mov edi, dword [esi + 0x1C]
 	add edi, esi
@@ -58,6 +60,8 @@ load_kernel_elf:
 			add edi, 32
 
 	loop .program_header_loop
+
+	pop esi
 
 	mov eax, dword [esi + 0x18]
 	ret

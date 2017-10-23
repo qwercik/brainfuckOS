@@ -1,6 +1,10 @@
 typedef unsigned short uint16_t;
 
-void _start()
+int test = 244;
+char* string = "Heheszki :D";
+
+extern "C"
+void kmain()
 {
 	uint16_t* vmem = (uint16_t*)0xB8000;
 	*vmem = 0x4141;

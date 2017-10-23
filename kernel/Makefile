@@ -1,11 +1,11 @@
 CXX = i686-elf-g++
 CXXFLAGS = -nostdlib
 LD = i686-elf-ld
-LDFLAGS = -nostdlib
+LDFLAGS = -nostdlib -T link.ld 
 
 BUILD_DIR = bin
 BINARIES = bin/kernel.o
-DEPENDENCIES = kernel.cpp 
+DEPENDENCIES = kernel.cpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all
