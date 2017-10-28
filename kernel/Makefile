@@ -1,11 +1,11 @@
-CXX = i686-elf-g++
-CXXFLAGS = -nostdlib -Iinclude -std=c++14
+CXX = i686-elf-g++ 
+CXXFLAGS = -nostdlib -Iinclude -std=c++14 -fno-rtti
 LD = i686-elf-ld
 LDFLAGS = -nostdlib -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o bin/Screen.o bin/Port.o
-DEPENDENCIES = src/kernel.cpp include/Screen.hpp include/Screen.cpp include/HAL/Port.hpp src/HAL/Port.cpp
+BINARIES = bin/kernel.o bin/Screen.o bin/Port.o bin/VgaTextMode.o
+DEPENDENCIES = src/kernel.cpp include/Screen.hpp include/Screen.cpp include/HAL/Port.hpp src/HAL/Port.cpp include/Screen/TerminalOutput.hpp include/Screen/VgaTextMode.hpp src/Screen/VgaTextMode.cpp include/cppsupport.hpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all
@@ -21,6 +21,9 @@ bin/%.o: src/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 bin/%.o: src/HAL/%.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+bin/%.o: src/Screen/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 .PHONY: clean

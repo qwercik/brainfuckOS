@@ -17,9 +17,9 @@ kernel/kernel.bin:
 
 .PHONY: clean
 clean:
-	rm $(FLOPPY_FILE) 
 	make -C loader/ clean
 	make -C kernel/ clean
+	rm $(FLOPPY_FILE)
 
 .PHONY: run
 run:

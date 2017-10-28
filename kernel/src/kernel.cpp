@@ -1,8 +1,12 @@
-#include <Screen.hpp>
+#include <Screen/TerminalOutput.hpp>
+#include <Screen/VgaTextMode.hpp>
+#include <cppsupport.hpp>
 
 extern "C"
 void kmain()
 {
-	bfos::Screen screen;
-	screen.printString("Welcome to brainfuckOS!", 0x02);
+	bfos::screen::VgaTextMode vgaTextMode;
+	bfos::screen::TerminalOutput* screen = &vgaTextMode;
+	screen->clearScreen();
+	screen->printString("Welcome to brainfuckOS!");
 }
