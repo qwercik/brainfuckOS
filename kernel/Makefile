@@ -1,11 +1,11 @@
 CXX = i686-elf-g++
-CXXFLAGS = -nostdlib
+CXXFLAGS = -nostdlib -Iinclude -std=c++14
 LD = i686-elf-ld
-LDFLAGS = -nostdlib -T link.ld 
+LDFLAGS = -nostdlib -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o
-DEPENDENCIES = kernel.cpp
+BINARIES = bin/kernel.o bin/Screen.o
+DEPENDENCIES = src/kernel.cpp include/Screen.hpp include/Screen.cpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all
@@ -17,7 +17,7 @@ $(BUILD_DIR):
 $(KERNEL_FILE): $(BINARIES)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-bin/%.o: %.cpp
+bin/%.o: src/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 .PHONY: clean

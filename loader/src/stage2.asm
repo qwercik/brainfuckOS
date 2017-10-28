@@ -62,6 +62,7 @@ start32:
 	; Run kernel :)
 	call eax
 
+	; Halt CPU after kernel run
 	cli 
 	hlt
 
