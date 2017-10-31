@@ -2,28 +2,19 @@
 
 namespace bfos::screen
 {
-	VgaTextMode::VgaTextMode()
+	uint16_t VgaTextMode::getWidth() const
 	{
+		return WIDTH;
 	}
 
-	void VgaTextMode::printChar(char character)
+	uint16_t VgaTextMode::getHeight() const
 	{
-		*videoMemory++ = (0x07 << 8) | character;		
+		return HEIGHT;
 	}
 
-	void VgaTextMode::printString(const char* string)
+	void VgaTextMode::putEntity(uint16_t positionX, uint16_t positionY, char character, uint8_t attribute)
 	{
-		for (int characterIndex = 0; string[characterIndex] != '\0'; ++characterIndex)
-		{
-			printChar(string[characterIndex]);
-		}
-	}
-
-	void VgaTextMode::clearScreen() 
-	{
-		for (int i = 0; i < 80 * 25; ++i)
-		{
-			videoMemory[i] = (0x07 << 8) | ' ';
-		}
+		uint32_t offset = positionY * WIDTH + positionX;
+		videoMemory[offset] = (attribute << 8) | character;
 	}
 }

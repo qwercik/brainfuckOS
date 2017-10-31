@@ -8,10 +8,14 @@ namespace bfos::screen
 	class VgaTextMode : public TerminalOutput
 	{
 	public:
-		VgaTextMode();
-		void printChar(char character) override;
-		void printString(const char* string) override;
-		void clearScreen() override;
+		const uint16_t WIDTH = 80;
+		const uint16_t HEIGHT = 25;
+
+		uint16_t getWidth() const override;
+		uint16_t getHeight() const override;
+	
+	protected:
+		void putEntity(uint16_t positionX, uint16_t positionY, char character, uint8_t attribute) override;
 
 	private:
 		uint16_t* videoMemory = reinterpret_cast<uint16_t*>(0xB8000);
