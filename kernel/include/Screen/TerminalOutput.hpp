@@ -7,12 +7,10 @@ namespace bfos::screen
 	class TerminalOutput
 	{
 	public:
-		void printChar(char character);
-		void printString(const char* string);
-		void clearScreen();
+		void printChar(char character, uint8_t attribute);
+		void printString(const char* string, uint8_t attribute);
+		void clearScreen(uint8_t attribute);
 
-		void setAttribute(uint8_t attribute);
-		
 		virtual uint16_t getWidth() const = 0;
 		virtual uint16_t getHeight() const = 0;
 
@@ -22,6 +20,5 @@ namespace bfos::screen
 	private:
 		uint16_t currentPositionX = 0;
 		uint16_t currentPositionY = 0;
-		uint8_t attribute = 0x07;
 	};
 }

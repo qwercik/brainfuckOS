@@ -2,21 +2,21 @@
 
 namespace bfos::screen
 {
-	void TerminalOutput::printChar(char character)
+	void TerminalOutput::printChar(char character, uint8_t attribute)
 	{
 		putEntity(currentPositionX, currentPositionY, character, attribute);
 		currentPositionX++;
 	}
 
-	void TerminalOutput::printString(const char* string)
+	void TerminalOutput::printString(const char* string, uint8_t attribute)
 	{
 		for (int characterIndex = 0; string[characterIndex] != '\0'; ++characterIndex)
 		{
-			printChar(string[characterIndex]);
+			printChar(string[characterIndex], attribute);
 		}
 	}
 
-	void TerminalOutput::clearScreen()
+	void TerminalOutput::clearScreen(uint8_t attribute)
 	{
 		for (int y = 0; y < getHeight(); ++y)
 		{
@@ -25,10 +25,5 @@ namespace bfos::screen
 				putEntity(x, y, ' ', attribute);
 			}
 		}
-	}
-
-	void TerminalOutput::setAttribute(uint8_t attribute)
-	{
-		this->attribute = attribute;
 	}
 }

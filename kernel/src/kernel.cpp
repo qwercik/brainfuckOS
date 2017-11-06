@@ -7,6 +7,6 @@ void kmain()
 {
 	bfos::screen::VgaTextMode vgaTextMode;
 	bfos::screen::TerminalOutput* screen = &vgaTextMode;
-	screen->clearScreen();
-	screen->printString("Welcome to brainfuckOS!");
+	screen->clearScreen(0x07);
+	screen->printString("Welcome to brainfuckOS!", 0x07);
 }
