@@ -1,5 +1,5 @@
 #include <Screen/TerminalOutput.hpp>
-#include <Screen/VgaTextMode.hpp>
+#include <Screen/VgaTextModeTerminalOutput.hpp>
 #include <cppsupport.hpp>
 
 extern "C"

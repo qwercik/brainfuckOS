@@ -4,8 +4,8 @@ LD = i686-elf-ld
 LDFLAGS = -nostdlib -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o bin/Port.o bin/TerminalOutput.o bin/VgaTextMode.o
-DEPENDENCIES = src/kernel.cpp include/HAL/Port.hpp src/HAL/Port.cpp include/Screen/TerminalOutput.hpp src/Screen/TerminalOutput.cpp include/Screen/VgaTextMode.hpp src/Screen/VgaTextMode.cpp include/cppsupport.hpp
+BINARIES = bin/kernel.o bin/Port.o bin/TerminalOutput.o bin/VgaTextModeTerminalOutput.o
+DEPENDENCIES = src/kernel.cpp include/HAL/Port.hpp src/HAL/Port.cpp include/Screen/TerminalOutput.hpp src/Screen/TerminalOutput.cpp include/Screen/VgaTextModeTerminalOutput.hpp src/Screen/VgaTextModeTerminalOutput.cpp include/cppsupport.hpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all

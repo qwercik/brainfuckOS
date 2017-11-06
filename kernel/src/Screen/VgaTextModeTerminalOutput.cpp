@@ -1,4 +1,4 @@
-#include <Screen/VgaTextMode.hpp>
+#include <Screen/VgaTextModeTerminalOutput.hpp>
 
 namespace bfos::screen
 {
