@@ -5,8 +5,9 @@
 extern "C"
 void kmain()
 {
-	bfos::screen::VgaTextMode vgaTextMode;
-	bfos::screen::TerminalOutput* screen = &vgaTextMode;
+	bfos::screen::VgaTextModeTerminalOutput vgaTextModeTerminalOutput;
+	bfos::screen::TerminalOutput* screen = &vgaTextModeTerminalOutput;
+
 	screen->clearScreen(0x07);
 	screen->printString("Welcome to brainfuckOS!", 0x07);
 }

@@ -5,7 +5,7 @@
 
 namespace bfos::screen
 {
-	class VgaTextMode : public TerminalOutput
+	class VgaTextModeTerminalOutput : public TerminalOutput
 	{
 	public:
 		const uint16_t WIDTH = 80;
