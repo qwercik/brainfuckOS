@@ -6,7 +6,10 @@ namespace bfos::terminal {
     using SizeUnit = uint16_t;
     using Attribute = uint8_t;
 
-    class Output {
+    const int WIDTH = 80;
+    const int HEIGHT = 25;
+
+    class RawOutput {
     public:
         void printChar(char character);
         void printString(const char *string);
@@ -16,12 +19,7 @@ namespace bfos::terminal {
         void setAttribute(Attribute attribute);
         void setCurrentPosition(SizeUnit positionX, SizeUnit positionY);
 
-        SizeUnit getWidth() const;
-        SizeUnit getHeight() const;
-    
-    protected:
-        void putEntity(SizeUnit positionX, SizeUnit positionY, char character, Attribute attribute);
-        char getEntity(SizeUnit positionX, SizeUnit positionY) const;
+        inline void putEntity(SizeUnit positionX, SizeUnit positionY, char character, Attribute attribute);
     
     private:
         SizeUnit positionX = 0;
