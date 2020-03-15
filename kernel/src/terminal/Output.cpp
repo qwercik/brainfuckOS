@@ -1,4 +1,5 @@
 #include <terminal/Output.hpp>
+#include <hal/port.hpp>
 
 namespace bfos::terminal {
     void Output::printChar(char character) {
@@ -10,6 +11,8 @@ namespace bfos::terminal {
             this->positionX = 0;
             this->positionY++;
         }
+
+        this->setBlinkingCursorPosition(positionX, positionY);
     }
 
     void Output::printString(const char *string) {
@@ -50,6 +53,12 @@ namespace bfos::terminal {
     }
     
     void Output::setBlinkingCursorPosition(SizeUnit positionX, SizeUnit positionY) {
+        SizeUnit offset = positionY * this->getWidth() + positionX;
 
+        namespace port = bfos::hal::port;
+        port::sendByte(0x3D4, 0x0F);
+        port::sendByte(0x3D5, offset & 0xFF);
+        port::sendByte(0x3D4, 0x0E);
+        port::sendByte(0x3D5, (offset >> 8) & 0xFF);
     }
 }
