@@ -3,8 +3,7 @@
 #include <cppsupport.hpp>
 
 extern "C"
-void kmain()
-{
+void kmain() {
 	bfos::screen::VgaTextModeTerminalOutput vgaTextModeTerminalOutput;
 	bfos::screen::TerminalOutput<uint8_t>* screen = &vgaTextModeTerminalOutput;
 
