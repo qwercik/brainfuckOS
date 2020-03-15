@@ -4,8 +4,8 @@ LD = i686-elf-ld
 LDFLAGS = -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o bin/port.o bin/Output.o
-DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/cppsupport.hpp include/terminal/Output.hpp src/terminal/Output.cpp
+BINARIES = bin/kernel.o bin/port.o bin/Output.o bin/cursor.o
+DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/cppsupport.hpp include/terminal/Output.hpp src/terminal/Output.cpp include/terminal/cursor.hpp src/terminal/cursor.cpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all

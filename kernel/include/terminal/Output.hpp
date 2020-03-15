@@ -21,7 +21,7 @@ namespace bfos::terminal {
     
     protected:
         void putEntity(SizeUnit positionX, SizeUnit positionY, char character, Attribute attribute);
-        void setBlinkingCursorPosition(SizeUnit positionX, SizeUnit positionY);
+        char getEntity(SizeUnit positionX, SizeUnit positionY) const;
     
     private:
         SizeUnit positionX = 0;

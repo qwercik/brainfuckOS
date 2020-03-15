@@ -1,18 +1,41 @@
 #include <terminal/Output.hpp>
+#include <terminal/cursor.hpp>
 #include <hal/port.hpp>
 
 namespace bfos::terminal {
     void Output::printChar(char character) {
-        this->putEntity(this->positionX, this->positionY, character, this->attribute);
+        switch (character) {
+        case '\n':
+            this->positionY++;
+            this->positionX = 0;
+            break;
 
-        this->positionX++;
+        case '\r':
+            this->positionX = 0;
+            break;
+        
+        default:
+            this->putEntity(this->positionX, this->positionY, character, this->attribute);
+            this->positionX++;
+        }
 
+        
         if (this->positionX == this->getWidth()) {
             this->positionX = 0;
             this->positionY++;
+
+            if (this->positionY == this->getHeight()) {
+                // Move all lines (excluding the first one) up
+                for (int y = 1; y < this->getHeight(); ++y) {
+                    for (int x = 0; x < this->getWidth(); ++x) {
+                        char character = this->getEntity(x, y);
+                        this->putEntity(x, y - 1, character, this->attribute);
+                    }
+                }
+            }
         }
 
-        this->setBlinkingCursorPosition(positionX, positionY);
+        cursor::setPosition(positionX, positionY);
     }
 
     void Output::printString(const char *string) {
@@ -49,16 +72,10 @@ namespace bfos::terminal {
     }
 
     void Output::putEntity(SizeUnit positionX, SizeUnit positionY, char character, Attribute attribute) {
-        videoMemory[positionY * this->getWidth() + positionX] = (attribute << 8) | character;
+        this->videoMemory[positionY * this->getWidth() + positionX] = (attribute << 8) | character;
     }
-    
-    void Output::setBlinkingCursorPosition(SizeUnit positionX, SizeUnit positionY) {
-        SizeUnit offset = positionY * this->getWidth() + positionX;
 
-        namespace port = bfos::hal::port;
-        port::sendByte(0x3D4, 0x0F);
-        port::sendByte(0x3D5, offset & 0xFF);
-        port::sendByte(0x3D4, 0x0E);
-        port::sendByte(0x3D5, (offset >> 8) & 0xFF);
+    char Output::getEntity(SizeUnit positionX, SizeUnit positionY) const {
+        return this->videoMemory[positionY * this->getWidth() + positionX] & 0xFF;
     }
 }
