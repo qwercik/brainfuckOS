@@ -4,8 +4,8 @@ LD = i686-elf-ld
 LDFLAGS = -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o bin/port.o bin/VgaTextModeTerminalOutput.o
-DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/Screen/TerminalOutput.hpp include/Screen/VgaTextModeTerminalOutput.hpp src/Screen/VgaTextModeTerminalOutput.cpp include/cppsupport.hpp
+BINARIES = bin/kernel.o bin/port.o bin/Output.o
+DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/cppsupport.hpp include/terminal/Output.hpp src/terminal/Output.cpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all
@@ -23,7 +23,7 @@ bin/%.o: src/%.cpp
 bin/%.o: src/hal/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
-bin/%.o: src/Screen/%.cpp
+bin/%.o: src/terminal/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 .PHONY: clean
