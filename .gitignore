@@ -3,3 +3,6 @@
 *.bin
 *.img
 bochs.conf
+
+kernel/bin/
+loader/bin/
