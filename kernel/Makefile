@@ -1,7 +1,7 @@
 CXX = i686-elf-g++ 
-CXXFLAGS = -nostdlib -Iinclude -std=c++14 -fno-rtti
+CXXFLAGS = -Iinclude -std=c++17 -fno-rtti -ffreestanding
 LD = i686-elf-ld
-LDFLAGS = -nostdlib -T link.ld
+LDFLAGS = -T link.ld
 
 BUILD_DIR = bin
 BINARIES = bin/kernel.o bin/Port.o bin/VgaTextModeTerminalOutput.o

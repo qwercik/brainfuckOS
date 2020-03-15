@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Screen/TerminalOutput.hpp>
-#include <types.hpp>
+#include <stdint.h>
 
 namespace bfos::screen
 {
