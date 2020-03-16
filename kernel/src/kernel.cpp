@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <cppsupport.hpp>
 #include <string.hpp>
-#include <terminal/RawOutput.hpp>
+#include <terminal/Output.hpp>
 
 void sleep(int n) {
 	for (int i = 0; i < n; ++i) {
@@ -11,11 +11,10 @@ void sleep(int n) {
 
 extern "C"
 void kmain() {
-	bfos::terminal::RawOutput terminal;
-	terminal.setAttribute(0xF);
-	terminal.printString("Welcome to brainfuckOS\n");
-	terminal.printString("Moja ulubiona liczba to ");
+	const char* name = "Eryk Andrzejewski";
 
-	char buffer[100];
-	terminal.printString(bfos::string::fromInt(-112997, buffer));
+	bfos::terminal::Output terminal;
+	terminal.setAttribute(0xF);
+	terminal.print("Welcome to brainfuckOS\n");
+	terminal.print("My favourite number is %d%% My name is %s", 997, name);
 }
