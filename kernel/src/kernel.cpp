@@ -9,15 +9,7 @@ void sleep(int n) {
 
 extern "C"
 void kmain() {
-	const uint16_t ATTRIBUTES[] = {0x01, 0x03, 0x07, 0xF};
-
 	bfos::terminal::RawOutput terminal;
-	terminal.setAttribute(0x03);
-
-	for (int i = 0; i < 100; ++i) {
-		terminal.setAttribute(ATTRIBUTES[i % 4]);
-		terminal.printChar('0' + i % 10);
-		terminal.printString(" Hello, world!\n");
-		sleep(50000000);
-	}
+	terminal.setAttribute(0xF);
+	terminal.printString("Welcome to brainfuckOS \b");
 }
