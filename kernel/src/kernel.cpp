@@ -9,6 +9,7 @@ void sleep(int n) {
 	}
 }
 
+
 extern "C"
 void kmain() {
 	const char* name = "Eryk Andrzejewski";
@@ -16,5 +17,6 @@ void kmain() {
 	bfos::terminal::Output terminal;
 	terminal.setAttribute(0xF);
 	terminal.print("Welcome to brainfuckOS\n");
-	terminal.print("My favourite number is %d%% My name is %s", 997, name);
+	terminal.print("My favourite number is %d%% My name is %s\n", 997, name);
+	terminal.print("Address of kmain(): %x\n", kmain);
 }
