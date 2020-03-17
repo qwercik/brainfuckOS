@@ -15,8 +15,8 @@ void kmain() {
 	const char* name = "Eryk Andrzejewski";
 
 	bfos::terminal::Output terminal;
-	terminal.setAttribute(0xF);
-	terminal.print("Welcome to brainfuckOS\n");
-	terminal.print("My favourite number is %d%% My name is %s\n", 997, name);
-	terminal.print("Address of kmain(): %x\n", kmain);
+	terminal.print("Welcome to brainfuckOS %d, %d, %d\n", 997, 112, 1410);
+	terminal.info("Info\n");
+	terminal.warning("Warning\n");
+	terminal.error("Error: kmain() addr: %x\n", kmain);
 }

@@ -17,6 +17,7 @@ namespace bfos::terminal {
         void clearScreen();
         
         void setAttribute(Attribute attribute);
+        Attribute getAttribute() const;
         void setCurrentPosition(SizeUnit positionX, SizeUnit positionY);
 
         inline void putEntity(SizeUnit positionX, SizeUnit positionY, char character, Attribute attribute);
@@ -24,7 +25,7 @@ namespace bfos::terminal {
     private:
         SizeUnit positionX = 0;
         SizeUnit positionY = 0;
-        Attribute attribute = 0x07;
+        Attribute attribute = 0xF;
 
         uint16_t * const videoMemory = reinterpret_cast<uint16_t*>(0xB8000);
     };

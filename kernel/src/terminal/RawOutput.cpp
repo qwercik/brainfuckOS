@@ -78,6 +78,10 @@ namespace bfos::terminal {
         this->attribute = attribute;
     }
 
+    Attribute RawOutput::getAttribute() const {
+        return this->attribute;
+    }
+
     void RawOutput::setCurrentPosition(SizeUnit positionX, SizeUnit positionY) {
         this->positionX = positionX;
         this->positionY = positionY;

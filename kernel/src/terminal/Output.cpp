@@ -18,6 +18,40 @@ namespace bfos::terminal {
         va_list args;
         va_start(args, format);
 
+        this->vprint(format, args);
+
+        va_end(args);
+    }
+
+    void Output::printColor(uint8_t color, const char *format, ...) {
+        va_list args;
+        va_start(args, format);
+        this->vprintColor(color, format, args);
+        va_end(args);
+    }
+
+    void Output::info(const char *format, ...) {
+        va_list args;
+        va_start(args, format);
+        this->vprintColor(0xA, format, args);
+        va_end(args);
+    }
+    
+    void Output::warning(const char *format, ...) {
+        va_list args;
+        va_start(args, format);
+        this->vprintColor(0xE, format, args);
+        va_end(args);
+    }
+
+    void Output::error(const char *format, ...) {
+        va_list args;
+        va_start(args, format);
+        this->vprintColor(0xC, format, args);
+        va_end(args);
+    }
+
+    void Output::vprint(const char *format, va_list args) {
         unsigned index = 0;
 
         while (format[index] != '\0') {
@@ -49,7 +83,12 @@ namespace bfos::terminal {
 
             index++;
         }
-
-        va_end(args);
     }
+
+    void Output::vprintColor(uint8_t color, const char *format, va_list args) {
+        uint16_t oldColor = this->getAttribute();
+        this->setAttribute(color);
+        this->vprint(format, args);
+        this->setAttribute(oldColor);
+    } 
 }
