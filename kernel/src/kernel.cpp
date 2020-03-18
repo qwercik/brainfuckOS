@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <cppsupport.hpp>
 #include <string.hpp>
+#include <panic.hpp>
 #include <terminal/Output.hpp>
 
 void sleep(int n) {
@@ -9,14 +10,12 @@ void sleep(int n) {
 	}
 }
 
-
 extern "C"
 void kmain() {
-	const char* name = "Eryk Andrzejewski";
-
 	bfos::terminal::Output terminal;
-	terminal.print("Welcome to brainfuckOS %d, %d, %d\n", 997, 112, 1410);
-	terminal.info("Info\n");
-	terminal.warning("Warning\n");
-	terminal.error("Error: kmain() addr: %x\n", kmain);
+	terminal.info("Succesfully booted\n");
+	terminal.info("Kernel loaded at %x\n", kmain);
+
+	bfos::panic("System not created yet");
+	//terminal.print("997 / 0 = %d", 997 / 0);
 }
