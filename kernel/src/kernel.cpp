@@ -2,6 +2,7 @@
 #include <cppsupport.hpp>
 #include <string.hpp>
 #include <panic.hpp>
+#include <interrupts/idt.hpp>
 #include <terminal/Output.hpp>
 
 void sleep(int n) {
@@ -12,10 +13,10 @@ void sleep(int n) {
 
 extern "C"
 void kmain() {
+	bfos::interrupts::idt::init();
+
 	bfos::terminal::Output terminal;
 	terminal.info("Succesfully booted\n");
 	terminal.info("Kernel loaded at %x\n", kmain);
-
-	bfos::panic("System not created yet");
-	//terminal.print("997 / 0 = %d", 997 / 0);
+	terminal.info("%d", 0 / 0);
 }

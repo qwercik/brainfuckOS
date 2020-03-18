@@ -4,8 +4,8 @@ LD = i686-elf-ld
 LDFLAGS = -T link.ld
 
 BUILD_DIR = bin
-BINARIES = bin/kernel.o bin/port.o bin/RawOutput.o bin/Output.o bin/cursor.o bin/string.o bin/panic.o
-DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/cppsupport.hpp include/terminal/RawOutput.hpp src/terminal/RawOutput.cpp include/terminal/cursor.hpp src/terminal/cursor.cpp include/memory/utils.hpp src/memory/utils.cpp include/string.hpp src/string.cpp include/terminal/Output.hpp src/terminal/Output.cpp include/panic.hpp src/panic.cpp
+BINARIES = bin/kernel.o bin/port.o bin/RawOutput.o bin/Output.o bin/cursor.o bin/string.o bin/panic.o bin/idt.o bin/handlers.o
+DEPENDENCIES = src/kernel.cpp include/hal/port.hpp src/hal/port.cpp include/cppsupport.hpp include/terminal/RawOutput.hpp src/terminal/RawOutput.cpp include/terminal/cursor.hpp src/terminal/cursor.cpp include/memory/utils.hpp src/memory/utils.cpp include/string.hpp src/string.cpp include/terminal/Output.hpp src/terminal/Output.cpp include/panic.hpp src/panic.cpp include/interrupts/idt.hpp src/interrupts/idt.cpp include/interrupts/handlers.hpp src/interrupts/handlers.cpp
 KERNEL_FILE = kernel.bin
 
 .PHONY: all
@@ -27,6 +27,9 @@ bin/%.o: src/terminal/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 bin/%.o: src/memory/%.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+bin/%.o: src/interrupts/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 .PHONY: clean
