@@ -29,6 +29,9 @@ bin/%.o: src/terminal/%.cpp
 bin/%.o: src/memory/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
+bin/handlers.o: src/interrupts/handlers.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS) -mgeneral-regs-only
+
 bin/%.o: src/interrupts/%.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
