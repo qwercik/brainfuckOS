@@ -18,4 +18,5 @@ void kmain() {
 	bfos::terminal::Output terminal;
 	terminal.info("Succesfully booted\n");
 	terminal.info("Kernel loaded at %x\n", kmain);
+	asm("int $0");
 }

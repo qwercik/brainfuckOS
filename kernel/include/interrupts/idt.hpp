@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <interrupts/handlers.hpp>
+#include <interrupts/InterruptFrame.hpp>
 
 namespace bfos::interrupts {
     struct Idt {
@@ -20,7 +21,7 @@ namespace bfos::interrupts {
     namespace idt {
         void init();
 
-        void setEntry(unsigned id, void (*handler)(handlers::InterruptFrame*));
+        void setEntry(unsigned id, void (*handler)());
         void load();
     }
 }

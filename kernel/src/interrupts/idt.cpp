@@ -1,16 +1,18 @@
 #include <interrupts/idt.hpp>
+#include <interrupts/handlers.hpp>
+#include <interrupts/InterruptFrame.hpp>
 
 namespace bfos::interrupts::idt {
     static Idt idtArray[256];
 
     void init() {
-        setEntry(0, handlers::divisionByZero);
-        setEntry(0xD, handlers::generalProtectionFault);
+        setEntry(0, handlers::divisionByZeroHandlerWrapper);
+        setEntry(0xD, handlers::generalProtectionFaultHandlerWrapper);
 
         load();
     }
 
-    void setEntry(unsigned id, void (*handler)(handlers::InterruptFrame*)) {
+    void setEntry(unsigned id, void (*handler)()) {
         uint32_t handlerAddress = (uint32_t)handler;
         idtArray[id] = {
             handlerAddress & 0xFFFF, // Low handler address
